@@ -5,6 +5,9 @@ const socketio = require('socket.io');
 const path     = require('path');
 
 const Sockets  = require('./sockets');
+const { dbConnection } = require('../database/config');
+
+
 
 class Server {
 
@@ -13,9 +16,14 @@ class Server {
         this.app  = express();
         this.port = process.env.PORT;
 
+
+        // DB - Connect
+        dbConnection();
+
+
         // Http server
         this.server = http.createServer( this.app );
-        
+
         // Configuraciones de sockets
         this.io = socketio( this.server, { /* configuraciones */ } );
     }
